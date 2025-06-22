@@ -1,0 +1,38 @@
+name: Build and Deploy ASP.NET MVC to IIS via FTP
+
+on:
+  push:
+    branches:
+      - main  # or master if you're using that
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET Framework for MSBuild
+      uses: microsoft/setup-msbuild@v1.3
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1
+
+    - name: Restore NuGet packages
+      run: nuget restore YourMvcProject.sln
+
+    - name: Build the solution
+      run: msbuild YourMvcProject.sln /p:Configuration=Release
+
+    - name: Publish website
+      run: |
+        msbuild YourMvcProject.csproj /p:DeployOnBuild=true /p:PublishProfile=FolderProfile /p:Configuration=Release /p:OutputPath=publish
+
+    - name: FTP Deploy to Local IIS
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./publish/
