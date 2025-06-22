@@ -1,0 +1,661 @@
+﻿@model MKSVY.Models.DataPoint
+@{
+    ViewBag.Title = "DashBoard Page";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <title></title>
+    <script>
+        @*var Dist_name = '@ViewData["Dist_Name"]';*@
+        window.onload = function () {
+        @*var myData = @Html.Raw(Json.Serialize(ViewData["Dist_Name"]));
+        var Dist_name = '@ViewData["Dist_Name"]'*@
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+
+	    @*title: {
+            text: 'SUBSTATION COUNT FOR ALL S/S IN A  @ViewData["Dist_Name"]',
+            fontSize: 16,
+            },*@
+            legend: {
+                verticalAlign: "bottom",
+                horizontalAlign: "center",
+                fontSize: 12,
+                //fontWeight: "bold",
+                maxWidth:300,
+
+            },
+	       data: [{
+               type: "doughnut",
+               click: onClick,
+		    startAngle: 60,
+               indexLabelFontSize: 16,
+            indexLabelPlacement:"outside",
+               indexLabel: "{y}",
+               //indexLabel: "{y} - #percent%",
+               percentFormatString: "#0.##",
+               toolTipContent: "{y} (#percent%)",
+               showInLegend: true,
+               innerRadius: "50%",
+               radius: "90%",
+		    //toolTipContent: "<b>{label}:</b> {y}",
+		    dataPoints: @Html.Raw(ViewBag.DataPoints),
+	       }]
+        });
+        chart.render();
+            function onClick(e) {
+                debugger;
+
+               // var str_status = e.dataPoint.legendText,
+                //alert(" SubStation " + e.dataPoint.legendText + "  " + e.dataPoint.y + "");
+                @*window.location = '@Url.Action("SubstaionList", "Substaion", new { dist_code = @ViewData["Dist_Code"], status1 = str_status })';*@
+                 var url = '@Url.Action("SubstaionList", "Substaion")';
+                window.location.href = url + '?dist_code=' + @ViewData["Dist_Code"] + '&status1=' + e.dataPoint.legendText;
+            }
+        var chart = new CanvasJS.Chart("chartContainer1", {
+	    animationEnabled: true,
+	    //title: {
+     //       text: "ALL SUBSTATIONS SOLAR CAPACITY",
+     //       fontSize: 16,
+     //       },
+            legend: {
+                verticalAlign: "bottom",
+                horizontalAlign: "center",
+                fontSize: 12,
+                //fontWeight: "bold",
+                maxWidth: 300,
+            },
+	       data: [{
+               type: "doughnut",
+               startAngle: 60,
+               indexLabelFontSize: 16,
+               indexLabelPlacement: "outside",
+               indexLabel: "{y}",
+               //indexLabel: "{y} - #percent%",
+               percentFormatString: "#0.##",
+               toolTipContent: "{y} (#percent%)",
+               showInLegend: true,
+               innerRadius: "50%",
+               radius: "90%",
+		    //toolTipContent: "<b>{label}:</b> {y}",
+		    dataPoints: @Html.Raw(ViewBag.SolarCapacityCount),
+	       }]
+        });
+            chart.render();
+
+         var chart = new CanvasJS.Chart("chartContainer2", {
+	    animationEnabled: true,
+	    //title: {
+     //       text: "AUGMENTATION WITH 'N' ALL SUBSTATIONS",
+     //       fontSize: 16,
+     //       },
+            legend: {
+                verticalAlign: "bottom",
+                horizontalAlign: "center",
+                fontSize: 12,
+                //fontWeight: "bold",
+                maxWidth: 300,
+            },
+	       data: [{
+               type: "doughnut",
+               startAngle: 60,
+               indexLabelFontSize: 16,
+               indexLabelPlacement: "outside",
+               indexLabel: "{y}",
+               //indexLabel: "{y} - #percent%",
+               percentFormatString: "#0.##",
+               toolTipContent: "{y} (#percent%)",
+               showInLegend: true,
+               innerRadius: "50%",
+               radius: "90%",
+		    //toolTipContent: "<b>{label}:</b> {y}",
+		    dataPoints: @Html.Raw(ViewBag.augmentationwisesCount),
+	       }]
+        });
+            chart.render();
+
+         var chart = new CanvasJS.Chart("chartContainer3", {
+	    animationEnabled: true,
+	    //title: {
+     //       text: "AUGMENTATION WITH 'N' SOLAR CAPACITY",
+     //       fontSize: 16,
+     //       },
+            legend: {
+                verticalAlign: "bottom",
+                horizontalAlign: "center",
+                fontSize: 12,
+                //fontWeight: "bold",
+                maxWidth: 300,
+            },
+	       data: [{
+               type: "doughnut",
+               startAngle: 60,
+               indexLabelFontSize: 16,
+               indexLabelPlacement: "outside",
+               indexLabel: "{y}",
+               //indexLabel: "{y} - #percent%",
+               percentFormatString: "#0.##",
+               toolTipContent: "{y} (#percent%)",
+               showInLegend: true,
+               innerRadius: "50%",
+               radius: "90%",
+		    //toolTipContent: "<b>{label}:</b> {y}",
+		    dataPoints: @Html.Raw(ViewBag.augmentationsCount),
+	       }]
+        });
+        chart.render();
+
+         @*var chart = new CanvasJS.Chart("chartContainer4", {
+	    animationEnabled: true,
+	    title: {
+            text: "Janana"
+            },
+            legend: {
+                verticalAlign: "bottom",
+                horizontalAlign: "center",
+            },
+	       data: [{
+               type: "doughnut",
+               startAngle: 60,
+               indexLabelFontSize: 16,
+               indexLabelPlacement: "outside",
+               indexLabel: "{y}",
+               //indexLabel: "{y} - #percent%",
+               percentFormatString: "#0.##",
+               toolTipContent: "{y} (#percent%)",
+               showInLegend: true,
+               innerRadius: "50%",
+               radius: "90%",
+		    //toolTipContent: "<b>{label}:</b> {y}",
+		    dataPoints: @Html.Raw(ViewBag.Datapoint1),
+	       }]
+        });
+            chart.render();*@
+
+
+
+    }
+    </script>
+    <script>
+ function SelectionChanged()
+ {
+     debugger;
+     //alert($('#NewID :selected').val());
+     //var DistCode = document.getElementById("#NewID").value;
+     var Category = $("#StatusYNID :selected").val();
+     var Distcode = $("#NewID :selected").val();
+     var url = '@Html.Raw(Url.Action("DataPoint", "DashBoard"))';/*, new { dist_code = ViewBag.DisstrictsList.SelectedValue, augmny = Category }*/
+     window.location = url + '?dist_code=' + Distcode + '&augmny=' + Category;
+ }
+    </script>
+    @*<script type="text/javascript">
+            $(function () {
+                $("#DIST_NAME").on("change", function {
+                    $("#DIST_NAME").val($(this).text());
+                });
+            });
+        </script>*@
+    <style>
+        .canvasjs-chart-credit {
+            display: none !important;
+        }
+    </style>
+    <style>
+        #main {
+            height: 800px;
+            width: 100%;
+        }
+
+        #shadow {
+            margin: 0 auto;
+            height: 300px;
+            width: 1024px;
+        }
+
+        /*ul {
+            list-style: none;
+        }
+
+            ul li {
+                float: left;
+                width: 100px;
+                text-align: center;
+                padding: 23px;
+                font-weight: bold;
+                font-family: Arial;
+                font-size: 20px;
+                margin: 21px;
+                box-shadow: -11px -3px 29px 4px;
+                border-radius: 30px;
+            }*/
+
+        .box {
+            box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+            min-height: 200px;
+            width: 100%;
+            margin: auto;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .box_head {
+            box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+            min-height: 83px;
+            width: 100%;
+            margin: auto;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .box_header {
+            box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+            min-height: 200px;
+            width: 100%;
+            margin: auto;
+            background: white;
+            border-radius: 5px;
+        }
+
+        #example2 {
+            border: 1px solid;
+            padding: 10px;
+            box-shadow: 5px 10px #888888;
+        }
+
+        .gd_header_Dash {
+            height: 1px;
+            background-color: #5d9cd2;
+            color: black;
+            border: 1px !important;
+            font-size: 15px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .stat-cards-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .stat-cards-item {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            padding: 24px 19px;
+            background-color: #FFFFFF;
+            -webkit-box-shadow: 0px 15px 50px rgba(160, 163, 189, 0.1);
+            box-shadow: 0px 15px 50px rgba(160, 163, 189, 0.1);
+            border-radius: 10px;
+            height: 100%;
+        }
+
+        .chartHeader {
+            font-size: 22px;
+            text-align: center;
+        }
+
+        .stat-cards {
+            margin-right: -10px;
+            margin-left: -10px;
+        }
+
+        .row {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+        .mb-5 {
+            margin-bottom: 3rem !important;
+        }
+    </style>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        <div class="container" style="width:1400px;margin-left: -12%; overflow:auto">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4 id="example2" style="font-weight:bold">
+                        Substation Availability by Land Clearance Status - @ViewData["Dist_Name"]
+                    </h4>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-xs-3" style="margin-left:0%;">
+
+                    </div>
+                    <div class="col-xs-3">
+                        @Html.DropDownListFor(model=>model.DIST_CODE, new SelectList(ViewBag.DisstrictsList, "Value", "Text", ViewBag.DisstrictsList.SelectedValue), new { @class = "form-control", id = "NewID", onchange = "SelectionChanged()" })
+
+                    </div>
+                    <div class="col-xs-3">
+                        @*@Html.DropDownList("AugmnYN", new SelectList(ViewBag.AugnYNList, "Value", "Text"), "-- Select --", htmlAttributes: new { @class = "form-control", onchange = "document.location.href = '/DashBoard/DataPoint?dist_code=' + this.options[this.selectedIndex].value;" })*@
+                        @Html.DropDownListFor(model=>model.StatusYN, new SelectList(ViewBag.AugnYNList,"Value","Text", ViewBag.AugnYNList.SelectedValue), htmlAttributes: new { @class = "form-control", id = "StatusYNID", onchange = "SelectionChanged()" })
+                        <br />
+                    </div>
+                    <div class="col-xs-3">
+
+
+                    </div>
+
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-xs-3" style="margin-left:0%;">
+                        <div class="box_head">
+                            @*box*@
+
+                            <h5 class="chartHeader">Substation Status</h5>
+                            @*<div id="chartContainer" style="height: 230px; width: 100%; display:inline-block"></div>*@
+                        </div>
+
+                    </div>
+                    <div class="col-xs-3">
+                        @*style="margin-left:3%;"*@
+                        <div class="box_head">
+                            <h5 class="chartHeader">Solr Capacity (MW)</h5>
+                            @*<div id="chartContainer1" style="height: 230px; width: 100%; display:inline-block"></div>*@
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        @*style="margin-left:3%;"*@
+                        <div class="box_head">
+                            <h5 class="chartHeader">Substations without Augmentation Requirement</h5>
+                            @*<div id="chartContainer2" style="height: 230px; width: 100%; display:inline-block"></div>*@
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        @*style="margin-left:3%;"*@
+                        <div class="box_head">
+                            <h5 class="chartHeader">Substation Solar Capacity without Augmentation Requirement (MW)</h5>
+                            @*<div id="chartContainer3" style="height: 230px; width: 100%; display:inline-block"></div>*@
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-xs-3" style="margin-left:0%;">
+                        <div class="box">
+                            @*box*@
+
+                            @*<h5 class="chartHeader">Substation Status</h5>*@
+                            <div id="chartContainer" style="height: 230px; width: 100%; display:inline-block"></div>
+                        </div>
+
+                    </div>
+                    <div class="col-xs-3">
+                        @*style="margin-left:3%;"*@
+                        <div class="box">
+                            @*<h5 class="chartHeader">Solr Capacity (MW)</h5>*@
+                            <div id="chartContainer1" style="height: 230px; width: 100%; display:inline-block"></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        @*style="margin-left:3%;"*@
+                        <div class="box">
+                            @*<h5 class="chartHeader">Substations without Augmentation Requirement</h5>*@
+                            <div id="chartContainer2" style="height: 230px; width: 100%; display:inline-block"></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        @*style="margin-left:3%;"*@
+                        <div class="box">
+                            @*<h5 class="chartHeader">Substation Solar Capacity without Augmentation Requirement (MW)</h5>*@
+                            <div id="chartContainer3" style="height: 230px; width: 100%; display:inline-block"></div>
+                        </div>
+                    </div>
+                    @*<div class="col-xs-2" style="margin-left:3%;">
+                            <div class="box">
+                                <div id="chartContainer4" style="height: 230px; width: 100%; display:inline-block"></div>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+            <br />
+            <div class="row" style="margin-top:-1%">
+                <div class="col-lg-12">
+                    <div class="col-xs-6" style="margin-left:0%;">
+                        @*<div class="box">*@
+                        <table id="tblSubstation" class="table table-striped table-bordered dt-responsive" style="width:100%;font-size:15px;color:black;font-weight:bold">
+                            <thead class="gd_header_Dash">
+
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>
+                                        Total substation
+                                    </th>
+                                    <th>
+                                        Completed
+                                    </th>
+                                    <th>
+                                        In Progress
+                                    </th>
+                                    <th>
+                                        Yet To Start
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.SubStationData)
+                                {
+
+                                    <tr>
+                                        <td style="width:23%;text-align:center">
+                                            @item.Record_Type
+                                            @*@Html.DisplayFor(modelItem => @item.Record_Type)*@
+
+                                        </td>
+                                        <td style="width:20%;text-align:center">
+                                            @item.TotalSubStation
+                                            @*@Html.DisplayFor(modelItem => item.TotalSubStation)*@
+
+                                        </td>
+                                        <td style="width:10%;text-align:center">
+                                            @item.Completed
+                                            @*@Html.DisplayFor(modelItem => item.Completed)*@
+
+                                        </td>
+                                        <td style="width:15%;text-align:center">
+                                            @item.InProgress
+                                            @*@Html.DisplayFor(modelItem => item.InProgress)*@
+
+                                        </td>
+                                        <td style="width: 20%;text-align:center">
+                                            @item.Yet_To_Start
+                                            @*@Html.DisplayFor(modelItem => item.Yet_To_Start)*@
+
+                                        </td>
+
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        @*</div>*@
+                    </div>
+                    <div class="col-xs-6" style="margin-left:0%;">
+                        @*<div class="box">*@
+                        <table id="tblSubstation" class="table table-striped table-bordered dt-responsive" style="width:100%;font-size:15px;color:black;font-weight:bold">
+                            <thead class="gd_header_Dash">
+
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>
+                                        Total substation
+                                    </th>
+                                    <th>
+                                        Completed
+                                    </th>
+                                    <th>
+                                        In Progress
+                                    </th>
+                                    <th>
+                                        Yet To Start
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.AugmentationData)
+                                {
+                                    @*(IEnumerable<MKSVY.Models.AugmentationWiseCount>)ViewData["augmentations"]*@
+                                    <tr>
+                                        <td style="width:23%;text-align:center">
+                                            @item.Record_Type
+                                            @*@Html.DisplayFor(modelItem => @item.Record_Type)*@
+
+                                        </td>
+                                        <td style="width:20%;text-align:center">
+                                            @item.TotalSubStation
+                                            @*@Html.DisplayFor(modelItem => item.TotalSubStation)*@
+
+                                        </td>
+                                        <td style="width:10%;text-align:center">
+                                            @item.Completed
+                                            @*@Html.DisplayFor(modelItem => item.Completed)*@
+
+                                        </td>
+                                        <td style="width:15%;text-align:center">
+                                            @item.InProgress
+                                            @*@Html.DisplayFor(modelItem => item.InProgress)*@
+
+                                        </td>
+                                        <td style="width: 20%;text-align:center">
+                                            @item.Yet_To_Start
+                                            @*@Html.DisplayFor(modelItem => item.Yet_To_Start)*@
+
+                                        </td>
+
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        @*</div>*@
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <div class="row" style="margin-top:-1%">
+                <div class="col-lg-12">
+                    <div class="col-xs-2" style="text-align: center;margin-left:2%;">
+                        @*<button type="button" class="btn btn-primary" onclick='window.location = "@Url.Action("SubstaionList", "Substaion",  new {dist_code = 510})";'>View Details </button>*@
+                    </div>
+                    <div class="col-xs-2" style="text-align: center;margin-left:3%;">
+                        @*<button type="button" class="btn btn-primary" onclick='window.location = "@Url.Action("SubstaionList", "Substaion",  new {dist_code = 510})";'> View Details</button>*@
+                    </div>
+                    <div class="col-xs-2" style="text-align: center;margin-left:3%;">
+                        <button type="button" class="btn btn-primary" onclick='window.location = "@Url.Action("SubstaionList", "Substaion",  new {dist_code = @ViewData["Dist_Code"], status1 = 0 })";'> View Details</button>
+                    </div>
+                    <div class="col-xs-2" style="text-align: center;margin-left:3%;">
+                        <button type="button" class="btn btn-primary" onclick='window.location = "@Url.Action("DistrictswiseSummary", "DashBoard",  new {})";'>Back To District Summary </button>
+                    </div>
+                    <div class="col-xs-2" style="text-align: center;margin-left:3%;">
+                        @*<button type="button" class="btn btn-primary" onclick='window.location = "@Url.Action("SubstaionList", "Substaion",  new {dist_code = 510})";'>View Details </button>*@
+                    </div>
+                </div>
+            </div>
+            <br />
+            @*<div class="row" style="margin-top:-1%">
+                    <div class="col-sm-12">
+                        <h4 id="example2" style="font-weight:bold"> </h4>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-xs-2" style="margin-left:0%;">
+                                    <div class="box">
+                                        <div id="chartContainer1" style="height: 230px; width: 100%; display:inline-block"></div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2" style="margin-left:3%;">
+                                    <div class="box">
+                                        <div id="chartContainer1" style="height: 230px; width: 100%; display:inline-block"></div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2" style="margin-left:3%;">
+                                    <div class="box">
+                                        <div id="chartContainer1" style="height: 230px; width: 100%; display:inline-block"></div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2" style="margin-left:3%;">
+                                    <div class="box">
+                                        <div id="chartContainer1" style="height: 230px; width: 100%; display:inline-block"></div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2" style="margin-left:3%;">
+                                    <div class="box">
+                                        <div id="chartContainer1" style="height: 230px; width: 100%; display:inline-block"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row" style="margin-top:-1%">
+                    <div class="col-lg-12">
+                        <div class="col-xs-2" style="text-align: center;margin-left:2%;">
+                            <button type="button" class="btn btn-primary" onclick='window.location = "@Url.Action("SubstaionList", "Substaion",  new {dist_code = 499})";'>View Details </button>
+                        </div>
+                        <div class="col-xs-2" style="text-align: center;margin-left:3%;">
+                            <button type="button" class="btn btn-primary" onclick='window.location = "@Url.Action("SubstaionList", "Substaion",  new {dist_code = 499})";'> View Details</button>
+                        </div>
+                        <div class="col-xs-2" style="text-align: center;margin-left:3%;">
+                            <button type="button" class="btn btn-primary" onclick='window.location = "@Url.Action("SubstaionList", "Substaion",  new {dist_code = 499})";'> View Details</button>
+                        </div>
+                        <div class="col-xs-2" style="text-align: center;margin-left:3%;">
+                            <button type="button" class="btn btn-primary" onclick='window.location = "@Url.Action("SubstaionList", "Substaion",  new {dist_code = 499})";'>View Details </button>
+                        </div>
+                        <div class="col-xs-2" style="text-align: center;margin-left:3%;">
+                            <button type="button" class="btn btn-primary" onclick='window.location = "@Url.Action("SubstaionList", "Substaion",  new {dist_code = 499})";'>View Details </button>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+    }
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>*@
+    <link href="~/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/JS/jquery.min.js"></script>
+    <script src="~/JS/bootstrap.min.js"></script>
+    <script src="~/JS/canvasjs.min.js"></script>
+</body>
+</html>

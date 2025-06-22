@@ -1,0 +1,213 @@
+﻿@model IEnumerable<MKSVY.Models.SubstaionList>
+@{
+    ViewBag.Title = "DashBoard Page";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+</head>
+
+<body>
+    <br />
+    <div class="row">
+        <div class="col-lg-12">
+            <table id="tblSubstation" class="table table-striped table-bordered table-sm" style="width:100%">
+                <thead>
+                    <tr>
+                        <th rowspan="2">
+                            TALUKA
+                        </th>
+                        <th rowspan="2">
+                            S/DN
+                        </th>
+                        <th rowspan="2">
+                            S/S Name
+                        </th>
+                        <th rowspan="2">
+                            S/S Number
+                        </th>
+                        <th rowspan="2">
+                            Solar Capacity (MW)
+                        </th>
+                        <th rowspan="2">
+                            Land Required (Acre)
+                        </th>
+                        <th colspan="2">Govt Feasible Lands</th>
+                        <th colspan="2">Pvt Feasible Lands</th>
+                        <th colspan="2">Proposal Submited Lands</th>
+                        <th colspan="2">Possession RCVD Lands</th>
+                        <th rowspan="2">
+                            Useful Lands in Possession(Acre)
+                        </th>
+                        <th rowspan="2">
+                            Status
+                        </th>
+                        <th rowspan="2">
+                            View
+                        </th>
+                    </tr>
+                    <tr>
+                        @*<th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>*@
+                        <th>
+                            Nos
+                        </th>
+                        <th>
+                            Acres
+                        </th>
+                        <th>
+                            Nos
+                        </th>
+                        <th>
+                            Acres
+                        </th>
+                        <th>
+                            Nos
+                        </th>
+                        <th>
+                            Acres
+                        </th>
+                        <th>
+                            Nos
+                        </th>
+                        <th>
+                            Acres
+                        </th>
+                        @*<th>
+                            </th>
+                            <th>
+                            </th>
+                            <th>
+                            </th>*@
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in (IEnumerable<MKSVY.Models.SubstaionList>)ViewData["substaionLists"])
+                    {
+                        <tr>
+
+                            <td style="width:10%">
+
+                                @Html.DisplayFor(modelItem => item.TALUKA_NAME)
+
+                            </td>
+                            <td style="width:10%">
+
+                                @Html.DisplayFor(modelItem => item.SUBDIVISION)
+
+                            </td>
+                            <td style="width:10%">
+
+                                @Html.DisplayFor(modelItem => item.SUBSTATION_NAME)
+
+                            </td>
+                            <td style="width:10%">
+
+                                @Html.DisplayFor(modelItem => item.SUBSTATION_NO)
+
+                            </td>
+                            <td style="width:10%">
+
+                                @Html.DisplayFor(modelItem => item.SOLAR_CAPACITY_MW)
+
+                            </td>
+                            <td style="width:10%">
+
+                                @Html.DisplayFor(modelItem => item.LAND_REQUIRED_IN_ACRE)
+
+                            </td>
+                            <td style="width:10%">
+
+                                @Html.DisplayFor(modelItem => item.GOVT_FEASIBLE_LANDS)
+
+                            </td>
+                            <td style="width:10%">
+
+                                @Html.DisplayFor(modelItem => item.GOVT_FEASIBLE_LANDS_ACRE)
+
+                            </td>
+                            <td style="width:10%">
+
+                                @Html.DisplayFor(modelItem => item.PVT_FEASIBLE_LANDS)
+
+                            </td>
+                            <td style="width:10%">
+
+                                @Html.DisplayFor(modelItem => item.PVT_FEASIBLE_LANDS_ACRE)
+
+                            </td>
+                            <td style="width:10%">
+
+                                @Html.DisplayFor(modelItem => item.PROPOSAL_SUBMITED_LANDS)
+
+                            </td>
+                            <td style="width:10%">
+
+                                @Html.DisplayFor(modelItem => item.PROPOSAL_SUBMITED_ARCE)
+
+                            </td>
+                            <td style="width:10%">
+
+                                @Html.DisplayFor(modelItem => item.POSSION_RCVD_LAND)
+
+                            </td>
+                            <td style="width:10%">
+
+                                @Html.DisplayFor(modelItem => item.POSSION_RCVD_AREA)
+
+                            </td>
+                            <td style="width:10%">
+
+                                @Html.DisplayFor(modelItem => item.USEFUL_LAND)
+
+                            </td>
+
+                            @if (item.LAND_REQUIRED_IN_ACRE == item.USEFUL_LAND)
+                            {
+                                <td style="width: 10%; background-color: green; color: black;font-weight: bold;">
+                                    Completed
+                                </td>
+                            }
+                            else /*if(item.LAND_REQUIRED_IN_ACRE > item.USEFUL_LAND && item.USEFUL_LAND !="")*/
+                            {
+                                <td style="width: 10%; background-color: orange; color: black;font-weight: bold;">
+                                    Pending
+                                </td>
+                            }
+
+                            <td style="width:10%">
+
+
+                                @Html.ActionLink("View", "LandClearance", "SubstaionList", new { id = item.DIST_CODE }, new { @class = "btn btn-danger" })
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+   
+</body>
+</html>
